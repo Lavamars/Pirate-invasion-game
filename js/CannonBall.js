@@ -7,21 +7,20 @@ class CannonBall {
       isStatic: true
     };
     this.r = 40;
-    this.body= Bodies.circle(x,y,this.r,options)
-    this.image=loadImage("./assets/cannonball.png")
+
+    this.body = Bodies.circle(x, y, this.r, options);
+
+    this.image = loadImage("./assets/cannonball.png");
+    this.tower = loadImage("./assets/gray.jpg");
+    this.trajectory = [];
     World.add(world, this.body);
   }
 
   shoot() {
-  
-    var velocity = p5.Vector.fromAngle(cannon.angle)
-    velocity.mult(20)
-    Matter.Body.setStatic(this.body,false)
-    Matter.Body.setVelocity(this.body,{x:velocity.x,y:velocity.y})
-
-    //set the angle of ball to cannon
-    //set static value to the body
-    //set the velocity for the ball to make the ball to move
+    var velocity = p5.Vector.fromAngle(cannon.angle);
+    velocity.mult(20);
+    Matter.Body.setStatic(this.body, false);
+    Matter.Body.setVelocity(this.body, { x: velocity.x, y: velocity.y });
   }
 
   display() {
@@ -31,9 +30,16 @@ class CannonBall {
     translate(pos.x, pos.y);
     rotate(angle);
     imageMode(CENTER);
-    image(this.image,0,0,this.r,this.r);
+    image(this.image, 0, 0, this.r, this.r);
     pop();
 
+    if (this.body.velocity.x > 0 && this.body.position.x > 300) {
+      var position = [this.body.position.x, this.body.position.y];
+      this.trajectory.push(position);
+    }
+
+    for (var i = 0; i < this.trajectory.length; i++) {
+      image(this.image, this.trajectory[i][0], this.trajectory[i][1], 5, 5);
     }
   }
-
+}
