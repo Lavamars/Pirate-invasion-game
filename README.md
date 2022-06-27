@@ -1,2 +1,2 @@
-# PiratesInvasionStage-2.5
-created multiple cannonballs.
+# PiratesInvasionStage-5
+added sprite animation
